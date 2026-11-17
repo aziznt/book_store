@@ -6,6 +6,8 @@ from PyQt5.QtWidgets import (
     QVBoxLayout
 )
 
+from core import *
+
 class BookStore(QWidget):
     def __init__(self):
         super().__init__()
@@ -41,9 +43,10 @@ class BookStore(QWidget):
         year = int(self.year_input.text().strip())
 
         book = (title, author, year)
-        print(book)
+        add_book(book)
 
-app = QApplication([])
-bs = BookStore()
-bs.show()
-app.exec_()
+def run():
+    app = QApplication([])
+    bs = BookStore()
+    bs.show()
+    app.exec_()
