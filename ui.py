@@ -3,12 +3,13 @@ from PyQt5.QtWidgets import (
     QWidget,
     QLineEdit,
     QPushButton,
-    QVBoxLayout
+    QVBoxLayout,
+    QTextEdit
 )
 
 from core import *
 
-class BookStore(QWidget):
+class AddBook(QWidget):
     def __init__(self):
         super().__init__()
         self.setFixedSize(600,500)
@@ -45,8 +46,29 @@ class BookStore(QWidget):
         book = (title, author, year)
         add_book(book)
 
+class ListBooks(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setFixedSize(600,500)
+        self.setStyleSheet("font-size: 25px")   
+        books = list_books()
+        books_str = ""
+        for id, title, author, year in books:
+            book = f"{id}. {title} {author} {year}\n"
+            books_str += book
+        self.books_edit = QTextEdit()
+        self.books_edit.setText(books_str)
+        self.vBox = QVBoxLayout()
+        self.vBox.addWidget(self.books_edit)
+
+        self.setLayout(self.vBox)
+
 def run():
     app = QApplication([])
-    bs = BookStore()
-    bs.show()
+    lb = ListBooks()
+    lb.show()
     app.exec_()
+
+
+if __name__ == "__main__":  
+    run()

@@ -30,15 +30,8 @@ def list_books():
         cursor = connection.cursor()
         cursor.execute("SELECT id, title, author, year FROM books")
         rows = cursor.fetchall()
-
-        if not rows:
-            print("📭 Hali kitoblar yo'q.")
-            return
-
-        print("\n📚 Kitoblar ro'yxati:")
-        for row in rows:
-            book_id, title, author, year = row
-            print(f"{book_id}. {title} - {author} ({year})")
+        return rows
+    
     except MySQLError as e:
         print("❌ Xato (list_books):", e)
     finally:
