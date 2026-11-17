@@ -4,7 +4,8 @@ from PyQt5.QtWidgets import (
     QLineEdit,
     QPushButton,
     QVBoxLayout,
-    QTextEdit
+    QTextEdit,
+    QMessageBox
 )
 
 from core import *
@@ -41,10 +42,31 @@ class AddBook(QWidget):
     def save_book(self):
         title = self.title_input.text().strip().capitalize()
         author = self.author_input.text().strip().title()
-        year = int(self.year_input.text().strip())
+        try:
+            year = int(self.year_input.text().strip())
+        except:
+            QMessageBox.warning(
+                self,
+                "Xatolik",
+                "Iltimos, yilga butun son kiriting"
+            )
+            return
+
+        if not all([title, author, year]):
+            QMessageBox.warning(
+                self,
+                "Xatolik",
+                "Iltimos barcha malumotni kiriting"
+            )
+            return
 
         book = (title, author, year)
         add_book(book)
+        QMessageBox.information(
+            self,
+            "Malumot",
+            "Yangi kitob qo'shildi"
+        )
 
 class ListBooks(QWidget):
     def __init__(self):
@@ -65,7 +87,7 @@ class ListBooks(QWidget):
 
 def run():
     app = QApplication([])
-    lb = ListBooks()
+    lb = AddBook()
     lb.show()
     app.exec_()
 
